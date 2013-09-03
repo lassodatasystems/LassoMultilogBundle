@@ -20,35 +20,46 @@
  */
 namespace Lasso\MultilogBundle;
 
-use Monolog\Handler\StreamHandler;
-use Symfony\Bridge\Monolog\Logger;
+use ArrayObject;
 
 /**
- * Creates a configured logger
+ * Class JsonLogObject
  *
- * Class MultilogFactory
+ * Simple wrapper class around an associative array. Adds a timestamp
+ * field (for logstash) and outputs json when converted to a string.
+ *
  * @package Lasso\MultilogBundle
  */
-class MultilogFactory
-{
+class JsonLogObject  {
     /**
-     * @param        $path
-     * @param string $channel
-     * @param int    $priority
+     * Holds the values to log
      *
-     * @return Logger
+     * @var array
      */
-    public static function get($path, $channel = '', $priority = 200)
+    protected $values = [];
+
+    /**
+     * @param array $values
+     */
+    public function __construct(Array $values = [])
     {
-        $formatter = new OnlyMessageFormatter();
+        $this->setValues($values);
+    }
 
-        $handler = new StreamHandler($path, $priority);
-        $handler->setFormatter($formatter);
+    public function setValues(Array $values)
+    {
+        $this->values = array_merge($this->values, $values);
+    }
 
-        $logger = new Logger($channel);
+    /**
+     * Add a timestamp to the data and return json
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $this->values['timestamp'] = date('c');
 
-        $logger->pushHandler($handler);
-
-        return $logger;
+        return json_encode($this->values);
     }
 }

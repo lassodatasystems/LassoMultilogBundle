@@ -18,37 +18,27 @@
  * along with LassoMultilog. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-namespace Lasso\MultilogBundle;
-
-use Monolog\Handler\StreamHandler;
-use Symfony\Bridge\Monolog\Logger;
+namespace Lasso\MultilogBundle\Tests\Unit;
+use Lasso\MultilogBundle\JsonLogObject;
+use PHPUnit_Framework_TestCase;
 
 /**
- * Creates a configured logger
- *
- * Class MultilogFactory
- * @package Lasso\MultilogBundle
+ * Test
  */
-class MultilogFactory
+class JsonLogObjectTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @param        $path
-     * @param string $channel
-     * @param int    $priority
-     *
-     * @return Logger
+     * @test
      */
-    public static function get($path, $channel = '', $priority = 200)
+    public function turnValuesIntoJsonString()
     {
-        $formatter = new OnlyMessageFormatter();
+        $message = new JsonLogObject([
+            'one' => [2, 3]
+        ]);
 
-        $handler = new StreamHandler($path, $priority);
-        $handler->setFormatter($formatter);
+        $messageData = json_decode((string)$message, true);
 
-        $logger = new Logger($channel);
-
-        $logger->pushHandler($handler);
-
-        return $logger;
+        $this->assertEquals(['one', 'timestamp'], array_keys($messageData));
+        $this->assertEquals($messageData['one'], [2, 3]);
     }
 }

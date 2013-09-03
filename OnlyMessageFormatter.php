@@ -19,36 +19,37 @@
  *
  */
 namespace Lasso\MultilogBundle;
-
-use Monolog\Handler\StreamHandler;
-use Symfony\Bridge\Monolog\Logger;
+use Monolog\Formatter\FormatterInterface;
 
 /**
- * Creates a configured logger
- *
- * Class MultilogFactory
- * @package Lasso\MultilogBundle
+ * Format logging messages for the mailscanner log in the right format
  */
-class MultilogFactory
+class OnlyMessageFormatter implements FormatterInterface
 {
     /**
-     * @param        $path
-     * @param string $channel
-     * @param int    $priority
+     * Convert a record into json
      *
-     * @return Logger
+     * @param array $record
+     *
+     * @return string
      */
-    public static function get($path, $channel = '', $priority = 200)
+    public function format(Array $record)
     {
-        $formatter = new OnlyMessageFormatter();
+        return $record['message'] . "\n";
+    }
 
-        $handler = new StreamHandler($path, $priority);
-        $handler->setFormatter($formatter);
-
-        $logger = new Logger($channel);
-
-        $logger->pushHandler($handler);
-
-        return $logger;
+    /**
+     * Convert multiple records into multiple lines of json
+     *
+     * @param array $records
+     *
+     * @return string
+     */
+    public function formatBatch(Array $records)
+    {
+        $self = $this;
+        return json_encode(array_map(function($record) use ($self) {
+            return $self->format($record);
+        }, $records));
     }
 }
