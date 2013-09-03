@@ -1,0 +1,14 @@
+{
+    "name": "lasso/multilog-bundle",
+    "description": "Use multiple instances of logger in one service",
+    "type": "symfony-bundle",
+    "keywords": [
+        "monolog", "logger"
+    ],
+    "homepage": "https://github.com/lassodatasystems",
+    "license": "LGPL",
+    "autoload": {
+        "psr-0": { "Lasso\\MultilogBundle": "" }
+    },
+    "target-dir": "Lasso/MultilogBundle"
+}
