@@ -58,7 +58,7 @@ class JsonLogObject  {
      */
     public function __toString()
     {
-        $this->values['timestamp'] = date('c');
+        $this->values['timestamp'] = date('Y-m-d\TH:i:s.' . explode('.', microtime(true))[1] . 'O');
 
         return json_encode($this->values);
     }
