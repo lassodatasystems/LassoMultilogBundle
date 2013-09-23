@@ -19,6 +19,9 @@
  *
  */
 namespace Lasso\MultilogBundle\Tests\Unit;
+
+require __DIR__ . '/../../JsonLogObject.php';
+
 use Lasso\MultilogBundle\JsonLogObject;
 use PHPUnit_Framework_TestCase;
 
@@ -30,7 +33,7 @@ class JsonLogObjectTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function turnValuesIntoJsonString()
+    public function turnValuesIntoJsonStringAndAddsTimestamp()
     {
         $message = new JsonLogObject([
             'one' => [2, 3]
@@ -40,5 +43,19 @@ class JsonLogObjectTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(['one', 'timestamp'], array_keys($messageData));
         $this->assertEquals($messageData['one'], [2, 3]);
+    }
+
+    /**
+     * @test
+     */
+    public function timestampIsCreatedCorrectly()
+    {
+        $object = new JsonLogObject([]);
+
+        $timestamp = $object->makeTimestamp('0.0000 1379976203');
+        $this->assertEquals('2013-09-23T15:43:23.0000-0700', $timestamp);
+
+        $timestamp = $object->makeTimestamp('0.1234567 1379976203');
+        $this->assertEquals('2013-09-23T15:43:23.1234567-0700', $timestamp);
     }
 }
