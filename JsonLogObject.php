@@ -52,16 +52,33 @@ class JsonLogObject  {
     }
 
     /**
+     * Requires the output of microtime() to be passed in.
+     * _NOT_ microtime(true), as that creates a decimal number
+     * which will not be parsed correctly.
+     *
+     * @param $microTime
+     *
+     * @return string
+     */
+    public function makeTimestamp($microTime)
+    {
+        $timeParts = explode(' ', $microTime);
+        $partOfSecond = $timeParts[0];
+        $second = $timeParts[1];
+
+        $microSeconds = explode('.', $partOfSecond)[1];
+
+        return date('Y-m-d\TH:i:s.' . $microSeconds . 'O', $second);
+    }
+
+    /**
      * Add a timestamp to the data and return json
      *
      * @return string
      */
     public function __toString()
     {
-        $microtime = explode(' ', microtime())[0];
-        $microseconds = explode('.', $microtime)[1];
-        
-        $this->values['timestamp'] = date('Y-m-d\TH:i:s.' . $microseconds . 'O');
+        $this->values['timestamp'] = $this->makeTimestamp(microtime());
 
         return json_encode($this->values);
     }
