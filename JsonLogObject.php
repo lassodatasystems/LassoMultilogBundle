@@ -58,11 +58,8 @@ class JsonLogObject  {
      */
     public function __toString()
     {
-        $microseconds = '0000';
-        $microtime = explode('.', microtime(true));
-        if (is_array($microtime) && array_key_exists(1, $microtime)) {
-            $microseconds = $microtime[1];
-        }
+        $microtime = explode(' ', microtime())[0];
+        $microseconds = explode('.', $microtime)[1];
         
         $this->values['timestamp'] = date('Y-m-d\TH:i:s.' . $microseconds . 'O');
 
