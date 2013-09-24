@@ -20,40 +20,44 @@
  */
 namespace Lasso\MultilogBundle\Tests\Unit;
 
-use Lasso\MultilogBundle\JsonLogObject;
+use Lasso\MultilogBundle\OnlyMessageFormatter;
 use PHPUnit_Framework_TestCase;
 
 /**
  * Test
  */
-class JsonLogObjectTest extends PHPUnit_Framework_TestCase
+class OnlyMessageFormatterTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
-    public function turnValuesIntoJsonStringAndAddsTimestamp()
+    public function extractMessageFromRecord()
     {
-        $message = new JsonLogObject([
-            'one' => [2, 3]
-        ]);
+        $formatter = new OnlyMessageFormatter();
 
-        $messageData = json_decode((string) $message, true);
+        $message = 'Only keep this message';
 
-        $this->assertEquals(['one', 'timestamp'], array_keys($messageData));
-        $this->assertEquals($messageData['one'], [2, 3]);
+        $record = [
+            'some_field'  => 'some value',
+            'message'     => $message,
+            'more_fields' => 'more values'
+        ];
+
+        $this->assertEquals($message . "\n", $formatter->format($record));
     }
 
     /**
      * @test
      */
-    public function timestampIsCreatedCorrectly()
+    public function extractMessageFromBatchRecords()
     {
-        $object = new JsonLogObject([]);
+        $records = [
+            ['field' => 'one', 'message' => '1'],
+            ['field' => 'two', 'message' => '2']
+        ];
 
-        $timestamp = $object->makeTimestamp('0.0000 1379976203');
-        $this->assertEquals('2013-09-23T15:43:23.0000-0700', $timestamp);
+        $formatter = new OnlyMessageFormatter();
 
-        $timestamp = $object->makeTimestamp('0.1234567 1379976203');
-        $this->assertEquals('2013-09-23T15:43:23.1234567-0700', $timestamp);
+        $this->assertEquals('["1\n","2\n"]', $formatter->formatBatch($records));
     }
 }

@@ -7,6 +7,10 @@
     ],
     "homepage": "https://github.com/lassodatasystems",
     "license": "LGPL",
+    "require": {
+        "php": ">=5.4.*",
+        "symfony/monolog-bundle": "2.3.*"
+    },
     "autoload": {
         "psr-0": { "Lasso\\MultilogBundle": "" }
     },
