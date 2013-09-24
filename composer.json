@@ -6,9 +6,9 @@
         "monolog", "logger"
     ],
     "homepage": "https://github.com/lassodatasystems",
-    "license": "LGPL",
+    "license": "LGPL-3.0+",
     "require": {
-        "php": ">=5.4.*",
+        "php": ">=5.4",
         "symfony/monolog-bundle": "2.3.*"
     },
     "autoload": {
