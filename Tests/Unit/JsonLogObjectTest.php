@@ -51,9 +51,9 @@ class JsonLogObjectTest extends PHPUnit_Framework_TestCase
         $object = new JsonLogObject([]);
 
         $timestamp = $object->makeTimestamp('0.0000 1379976203');
-        $this->assertEquals('2013-09-23T15:43:23.0000-0700', $timestamp);
+        $this->assertContains('2013-09-23T15:43:23.0000', $timestamp);
 
         $timestamp = $object->makeTimestamp('0.1234567 1379976203');
-        $this->assertEquals('2013-09-23T15:43:23.1234567-0700', $timestamp);
+        $this->assertContains('2013-09-23T15:43:23.1234567', $timestamp);
     }
 }
