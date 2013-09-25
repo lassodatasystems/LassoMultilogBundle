@@ -50,10 +50,17 @@ class JsonLogObjectTest extends PHPUnit_Framework_TestCase
     {
         $object = new JsonLogObject([]);
 
-        $timestamp = $object->makeTimestamp('0.0000 1379976203');
-        $this->assertContains('2013-09-23T15:43:23.0000', $timestamp);
+        $expectedSeconds = 1379976203;
+        $expectedMiliseconds = '.0000';
+        $expectedDate = date('Y-m-d\TH:i:s' . $expectedMiliseconds . 'O', $expectedSeconds);
 
-        $timestamp = $object->makeTimestamp('0.1234567 1379976203');
-        $this->assertContains('2013-09-23T15:43:23.1234567', $timestamp);
+        $timestamp = $object->makeTimestamp('0' . $expectedMiliseconds . ' ' . $expectedSeconds);
+        $this->assertEquals($expectedDate, $timestamp);
+
+        $expectedMiliseconds = '.1234567';
+        $expectedDate = date('Y-m-d\TH:i:s' . $expectedMiliseconds . 'O', $expectedSeconds);
+        
+        $timestamp = $object->makeTimestamp('0' . $expectedMiliseconds . ' ' . $expectedSeconds);
+        $this->assertEquals($expectedDate, $timestamp);
     }
 }
