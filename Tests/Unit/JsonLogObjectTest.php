@@ -59,7 +59,7 @@ class JsonLogObjectTest extends PHPUnit_Framework_TestCase
 
         $expectedMiliseconds = '.1234567';
         $expectedDate = date('Y-m-d\TH:i:s' . $expectedMiliseconds . 'O', $expectedSeconds);
-        
+
         $timestamp = $object->makeTimestamp('0' . $expectedMiliseconds . ' ' . $expectedSeconds);
         $this->assertEquals($expectedDate, $timestamp);
     }
