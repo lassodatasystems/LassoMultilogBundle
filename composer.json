@@ -9,7 +9,7 @@
     "license": "LGPL-3.0+",
     "require": {
         "php": ">=5.4",
-        "symfony/monolog-bundle": "2.3.*"
+        "symfony/monolog-bundle": "~2.4"
     },
     "autoload": {
         "psr-0": { "Lasso\\MultilogBundle": "" }
