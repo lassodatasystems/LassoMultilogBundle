@@ -30,7 +30,8 @@ use ArrayObject;
  *
  * @package Lasso\MultilogBundle
  */
-class JsonLogObject  {
+class JsonLogObject
+{
     /**
      * Holds the values to log
      *
@@ -46,6 +47,9 @@ class JsonLogObject  {
         $this->setValues($values);
     }
 
+    /**
+     * @param array $values
+     */
     public function setValues(Array $values)
     {
         $this->values = array_merge($this->values, $values);
@@ -56,7 +60,7 @@ class JsonLogObject  {
      * _NOT_ microtime(true), as that creates a decimal number
      * which will not be parsed correctly.
      *
-     * @param $microTime
+     * @param string $microTime
      *
      * @return string
      */

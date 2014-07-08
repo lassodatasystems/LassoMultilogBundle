@@ -48,6 +48,7 @@ class OnlyMessageFormatter implements FormatterInterface
     public function formatBatch(Array $records)
     {
         $self = $this;
+
         return json_encode(array_map(function($record) use ($self) {
             return $self->format($record);
         }, $records));
