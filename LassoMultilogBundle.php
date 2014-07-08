@@ -22,6 +22,11 @@ namespace Lasso\MultilogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * Class LassoMultilogBundle
+ *
+ * @package Lasso\MultilogBundle
+ */
 class LassoMultilogBundle extends Bundle
 {
 }

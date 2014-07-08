@@ -27,12 +27,13 @@ use Symfony\Bridge\Monolog\Logger;
  * Creates a configured logger
  *
  * Class MultilogFactory
+ *
  * @package Lasso\MultilogBundle
  */
 class MultilogFactory
 {
     /**
-     * @param        $path
+     * @param string $path
      * @param string $channel
      * @param int    $priority
      *

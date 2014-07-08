@@ -42,6 +42,9 @@ class MultilogFactoryTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Set up
+     */
     public function setUp()
     {
         $this->deleteLogFiles();
@@ -103,6 +106,9 @@ class MultilogFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("{$message}\n", file_get_contents(self::ADDITIONAL_LOG_PATH));
     }
 
+    /**
+     * Tear down
+     */
     public function tearDown()
     {
         $this->deleteLogFiles();
