@@ -84,6 +84,22 @@ class JsonLogObject
     {
         $this->values['timestamp'] = $this->makeTimestamp(microtime());
 
-        return json_encode($this->values);
+        return json_encode($this->ensureUtf8($this->values));
+    }
+
+    private function ensureUtf8($element) {
+        if (is_string($element)) {
+            $element = utf8_encode($element);
+        } else  if (is_array($element)) {
+            foreach ($element as $key => $value) {
+                $element[$key] = $this->ensureUtf8($value);
+            }
+        } else if (is_object($element)) {
+            foreach ($element as $key => $value) {
+                $element->$key = $this->ensureUtf8($value);
+            }
+        }
+
+        return $element;
     }
 }
